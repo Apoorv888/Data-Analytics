@@ -1,0 +1,74 @@
+PH = PH Scale of water.
+HARDNESS = the amount of dissolved calcium and magnesium in the water
+SOLIDS = dissolved solids plus suspended and settleable solids in water
+CHLORAMINES = the process of adding chloramine to drinking water to disinfect it and kill germs.
+SULFATE = Sulfate levels above 250 mg/L may make the water taste bitter or like medicine.
+CONFUCTIVITY =  Conductivity is useful as a general measure of water quality.(SEA WATER,RAIN WATER,DRINKING WATER)
+ORGANIC CARBON = the amount carbon atoms tied up in organic compounds in a water sample.
+THMS=Trihalomethanes as an important group of disinfection byproducts (DBPs) are formed by the reaction of chlorine with natural organic matter exists in water supplies. 
+TURBIDITY = Turbidity is the measure of relative clarity of a liquid.
+POTABILITY = It is a water that can use for Drinking and Cooking Purpose.
+
+
+
+import pandas as pd
+
+import plotly.express as px
+import plotly.graph_objects as go
+import plotly.io as pio
+import statistics
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+'''from google.colab import drive
+drive.mount('/content/drive')'''
+
+df = pd.read_csv("https://raw.githubusercontent.com/amankharwal/Website-data/master/water_potability.csv")
+
+print(df.head())
+#print(df)
+
+
+df.isnull().sum
+
+df.shape
+
+figure = px.bar(df,
+                x=df["Potability"],
+                y=df["ph"],
+                color=df["ph"],
+                title="Potability")
+
+                
+figure.show()
+
+Port = df["Potability"].value_counts()
+label = Port.index
+counts = Port.values
+colors = ['gold','green']
+
+fig = go.Figure(data=[go.Pie(labels=label,values=counts)])
+fig.update_layout(title_text='Number of Portability')
+fig.update_traces(hoverinfo='label+percent',textinfo='value',textfont_size=30,
+                  marker=dict(colors=colors,line=dict(color='black',width=3)))
+fig.show()
+
+
+print(counts)
+
+
+IN THIS PIE CHART WE CAN ANALYIS THAT THE NUMBER OF ZEROS ARE 61% AND NUMBER OF ONE'S ARE 39%
+
+
+sns.countplot(df['Potability'])
+plt.show()
+
+sns.histplot(df['ph'])
+plt.show()
+
+
+df.hist(figsize=(14,14))
+plt.show()
+
